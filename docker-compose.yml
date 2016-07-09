@@ -25,6 +25,8 @@ api:
   links:
     - postgres:db
   environment:
+    - DB_ADDR=db
+    - DB_PORT=5432
     - DB_NAME=todo_json_api_db
     - DB_USER=postgres
     - DB_PSWD=postgres
