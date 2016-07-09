@@ -1,12 +1,14 @@
 store:
   # data-only container
   image: postgres:latest # reuse postgres container
+  container_name: db_store
   volumes:
     - /var/lib/postgresql/data
   command: "true"
 
 postgres:
   image: postgres
+  container_name: pg_db
   ports:
     - 5432:5432
   volumes_from:
@@ -17,6 +19,7 @@ postgres:
     - POSTGRES_DB=todo_json_api_db
 
 api:
+  container_name: app
   build: ./api
   ports:
     - 3000:3000
