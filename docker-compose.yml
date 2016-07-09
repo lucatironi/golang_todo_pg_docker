@@ -1,0 +1,31 @@
+store:
+  # data-only container
+  image: postgres:latest # reuse postgres container
+  volumes:
+    - /var/lib/postgresql/data
+  command: "true"
+
+postgres:
+  image: postgres
+  ports:
+    - 5432:5432
+  volumes_from:
+    - store # connect postgres and the data-only container
+  environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=todo_json_api_db
+
+api:
+  build: ./api
+  ports:
+    - 3000:3000
+  volumes:
+    - ./api:/go/src/github.com/lucatironi/todo_json_api
+  links:
+    - postgres:db
+  environment:
+    - DB_NAME=todo_json_api_db
+    - DB_USER=postgres
+    - DB_PSWD=postgres
+    - PORT=3000
