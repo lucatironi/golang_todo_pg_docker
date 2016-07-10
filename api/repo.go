@@ -28,3 +28,12 @@ func RepoCreateTodo(newTodo Todo) Todo {
 
   return newTodo
 }
+
+func RepoUpdateTodo(updatedTodo Todo) Todo {
+  err := db.Update(&updatedTodo)
+  if err != nil {
+    panic(err)
+  }
+
+  return updatedTodo
+}
