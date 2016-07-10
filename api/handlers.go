@@ -42,12 +42,7 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
   }
 
   // If we didn't find it, 404
-  w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-  w.WriteHeader(http.StatusNotFound)
-  if err := json.NewEncoder(w).Encode(jsonErr{Code: http.StatusNotFound, Text: "Not Found"}); err != nil {
-    panic(err)
-  }
-
+  notFound(w)
 }
 
 /*
@@ -75,6 +70,14 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   w.WriteHeader(http.StatusCreated)
   if err := json.NewEncoder(w).Encode(t); err != nil {
+    panic(err)
+  }
+}
+
+func notFound(w http.ResponseWriter) {
+  w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+  w.WriteHeader(http.StatusNotFound)
+  if err := json.NewEncoder(w).Encode(jsonErr{Code: http.StatusNotFound, Text: "Not Found"}); err != nil {
     panic(err)
   }
 }
