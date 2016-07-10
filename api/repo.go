@@ -14,7 +14,7 @@ func RepoFindTodo(todoId int) Todo {
   todo := Todo{Id: todoId}
   err := db.Select(&todo)
   if err != nil {
-    panic(err)
+    return Todo{}
   }
 
   return todo
