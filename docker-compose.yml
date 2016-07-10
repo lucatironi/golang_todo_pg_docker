@@ -24,7 +24,7 @@ api:
   ports:
     - 3000:3000
   volumes:
-    - ./api:/go/src/github.com/lucatironi/todo_json_api
+    - ./api:/go/src/github.com/lucatironi/golang_todo_pg_docker
   links:
     - postgres:db
   environment:
