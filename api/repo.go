@@ -37,3 +37,12 @@ func RepoUpdateTodo(updatedTodo Todo) Todo {
 
   return updatedTodo
 }
+
+func RepoDeleteTodo(deletedTodo Todo) Todo {
+  err := db.Delete(&deletedTodo)
+  if err != nil {
+    panic(err)
+  }
+
+  return deletedTodo
+}

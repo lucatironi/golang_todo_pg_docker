@@ -112,6 +112,29 @@ func TodoUpdate(w http.ResponseWriter, r *http.Request) {
   notFound(w)
 }
 
+func TodoDelete(w http.ResponseWriter, r *http.Request) {
+  vars := mux.Vars(r)
+  var todoId int
+  var err error
+
+  if todoId, err = strconv.Atoi(vars["todoId"]); err != nil {
+    panic(err)
+  }
+  todo := RepoFindTodo(todoId)
+  if todo.Id > 0 {
+    todo = RepoDeleteTodo(todo)
+    w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+    w.WriteHeader(http.StatusOK)
+    if err := json.NewEncoder(w).Encode(todo); err != nil {
+      panic(err)
+    }
+    return
+  }
+
+  // If we didn't find it, 404
+  notFound(w)
+}
+
 func notFound(w http.ResponseWriter) {
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   w.WriteHeader(http.StatusNotFound)
